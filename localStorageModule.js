@@ -38,7 +38,7 @@ angularLocalStorage.service('localStorageService', [
   // If local storage is not available in the browser use cookies
   // Example use: localStorageService.add('library','angular');
   var addToLocalStorage = function (key, value) {
-
+    value = angular.toJson(value);
     // If this browser does not support local storage use cookies
     if (!browserSupportsLocalStorage()) {
       $rootScope.$broadcast('LocalStorageModule.notification.warning','LOCAL_STORAGE_NOT_SUPPORTED');
@@ -73,6 +73,8 @@ angularLocalStorage.service('localStorageService', [
 
     var item = localStorage.getItem(prefix+key);
     if (!item) return null;
+    
+    item = angular.fromJson(item);
     return item;
   };
 
